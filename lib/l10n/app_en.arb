@@ -1,0 +1,7 @@
+{
+  "@@locale": "en",
+
+  "app_title": "Architecture Sample App",
+  "home_screen_tab_photo": "Photo",
+  "home_screen_tab_favorite": "Favorite"
+}

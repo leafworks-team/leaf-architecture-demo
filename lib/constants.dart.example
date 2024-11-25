@@ -1,0 +1,4 @@
+class AppConstants {
+  static const String baseURL = '';
+  static const String accessKey = '';
+}

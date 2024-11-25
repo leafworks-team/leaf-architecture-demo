@@ -31,6 +31,9 @@ migrate_working_dir/
 .pub/
 /build/
 *.g.dart
+*.gr.dart
+*.freezed.dart
+*.config.dart
 
 # Symbolication related
 app.*.symbols
@@ -42,3 +45,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# ignore key
+constants.dart
+
+# Don't ignore these files if they're in lib/gen/
+!lib/gen/*.freezed.dart
+!lib/gen/*.g.dart

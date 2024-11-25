@@ -1,0 +1,7 @@
+{
+  "@@locale": "ko",
+
+  "app_title" : "아키텍처 샘플 앱",
+  "home_screen_tab_photo" : "포토",
+  "home_screen_tab_favorite" : "즐겨찾기"
+}
