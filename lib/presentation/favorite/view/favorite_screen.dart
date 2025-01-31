@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 @RoutePage()
 class FavoriteScreen extends ConsumerWidget {
   static const String routeName = 'favorite';
+
   const FavoriteScreen({super.key});
 
   @override

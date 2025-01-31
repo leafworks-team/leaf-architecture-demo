@@ -1,7 +1,7 @@
 import 'package:architecture_sample/core/router/app_router.gr.dart';
-import 'package:architecture_sample/presentation/view/favorite/favorite_screen.dart';
-import 'package:architecture_sample/presentation/view/home/home_screen.dart';
-import 'package:architecture_sample/presentation/view/photo/photo_screen.dart';
+import 'package:architecture_sample/presentation/favorite/view/favorite_screen.dart';
+import 'package:architecture_sample/presentation/home/view/home_screen.dart';
+import 'package:architecture_sample/presentation/photo/view/photo_screen.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

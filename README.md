@@ -6,8 +6,8 @@ Flutter Clean Architecture + MVVM
 
 ### 필수 요구사항
 
-- Flutter SDK: 3.24.5 이상
-- Dart SDK: 3.5.4 이상
+- Flutter SDK: 3.27.3 이상
+- Dart SDK: 3.6.1 이상
 
 ### 환경 설정
 
@@ -85,14 +85,16 @@ lib/
   │       └── get_user_profile.dart
   │
   ├── presentation/
-  │     ├── view/
-  │     │   └── profile/
-  │     │       └── profile_page.dart
-  │     ├── viewmodels/
-  │     │   └── profile_viewmodel.dart
-  │     └── widgets/
-  │         ├── common/
-  │         └── profile/
+  │     ├── profile/
+  │     │   ├── state/
+  │     │   │   └── profile_state.dart
+  │     │   │── view/
+  │     │   │   └── profile_screen.dart
+  │     │   │── viewmodels/
+  │     │   │   └── profile_viewmodel.dart
+  │     │   └── widgets/
+  │     │       └── ...
+  │     └── common/
   │  
   └── constants.dart
 ```

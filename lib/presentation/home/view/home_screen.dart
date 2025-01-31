@@ -1,5 +1,5 @@
 import 'package:architecture_sample/core/router/app_router.gr.dart';
-import 'package:architecture_sample/presentation/viewmodels/home_viewmodel.dart';
+import 'package:architecture_sample/presentation/home/viewmodels/home_viewmodel.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,8 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final homeViewModel = ref.watch(homeViewModelProvider);
+    final homeState = ref.watch(homeViewModelProvider);
+    final homeViewModel = ref.read(homeViewModelProvider.notifier);
 
     return AutoTabsRouter.tabBar(
       routes: [
