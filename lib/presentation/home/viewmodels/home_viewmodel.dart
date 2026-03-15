@@ -1,12 +1,11 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../state/home_state.dart';
 
-final homeViewModelProvider =
-    StateNotifierProvider<HomeViewModel, HomeState>((ref) {
-  return HomeViewModel();
-});
+part 'home_viewmodel.g.dart';
 
-class HomeViewModel extends StateNotifier<HomeState> {
-  HomeViewModel() : super(HomeState());
+@riverpod
+class HomeViewModel extends _$HomeViewModel {
+  @override
+  HomeState build() => HomeState();
 }

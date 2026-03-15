@@ -3,9 +3,12 @@ import 'package:architecture_sample/presentation/favorite/view/favorite_screen.d
 import 'package:architecture_sample/presentation/home/view/home_screen.dart';
 import 'package:architecture_sample/presentation/photo/view/photo_screen.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final appRouterProvider = Provider((ref) => AppRouter());
+part 'app_router.g.dart';
+
+@riverpod
+AppRouter appRouter(Ref ref) => AppRouter();
 
 @AutoRouterConfig(replaceInRouteName: 'Screen|Page,Route')
 class AppRouter extends RootStackRouter {

@@ -1,9 +1,11 @@
 import 'package:architecture_sample/constants.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:injectable/injectable.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'failures.dart';
+
+part 'dio_client.g.dart';
 
 @singleton
 class DioClient {
@@ -38,4 +40,5 @@ class DioClient {
   }
 }
 
-final dioClientProvider = Provider((ref) => DioClient());
+@riverpod
+DioClient dioClient(Ref ref) => DioClient();

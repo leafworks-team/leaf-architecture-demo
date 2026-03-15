@@ -1,11 +1,14 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../data/datasources/PhotoRemoteDataSource.dart';
 import '../../data/repositories/photo_repository_impl.dart';
 import '../entities/photo_entity.dart';
 
-final photoRepositoryProvider = Provider<PhotoRepository>(
-    (ref) => PhotoRepositoryImpl(ref.watch(photoRemoteDataSourceProvider)));
+part 'photo_repository.g.dart';
+
+@riverpod
+PhotoRepository photoRepository(Ref ref) =>
+    PhotoRepositoryImpl(ref.watch(photoRemoteDataSourceProvider));
 
 abstract class PhotoRepository {
   Future<List<PhotoEntity>> getPhotos(int page, int perPage);

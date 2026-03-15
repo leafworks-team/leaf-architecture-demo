@@ -51,6 +51,9 @@ app.*.map.json
 # ignore key
 constants.dart
 
+# Generated localization files
+lib/l10n/app_localizations*.dart
+
 # Don't ignore these files if they're in lib/gen/
 !lib/gen/*.freezed.dart
 !lib/gen/*.g.dart

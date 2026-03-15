@@ -1,18 +1,19 @@
 import 'package:architecture_sample/domain/usecases/photo_usecase.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../state/photo_state.dart';
 
-final photoViewModelProvider =
-    StateNotifierProvider<PhotoViewModel, PhotoState>((ref) {
-  final photoUseCase = ref.watch(photoUseCaseProvider);
-  return PhotoViewModel(photoUseCase);
-});
+part 'photo_viewmodel.g.dart';
 
-class PhotoViewModel extends StateNotifier<PhotoState> {
-  final PhotoUseCase useCase;
+@riverpod
+class PhotoViewModel extends _$PhotoViewModel {
+  late final PhotoUseCase useCase;
 
-  PhotoViewModel(this.useCase) : super(PhotoState());
+  @override
+  PhotoState build() {
+    useCase = ref.watch(photoUseCaseProvider);
+    return PhotoState();
+  }
 
   Future<void> fetchPhotos(int page, int perPage) async {
     state = state.copyWith(status: PhotoStatus.loading);

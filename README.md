@@ -40,13 +40,6 @@ flutter pub run build_runner build --delete-conflicting-outputs
 flutter pub run build_runner build
 ```
 
-### 환경 변수 설정
-
-1. vault를 통해서 `constants.dart` 생성
-```
-vault kv get -field=value secret/sample/constants.dart > lib/constants.dart
-```
-
 ## 📁 프로젝트 구조
 
 ```

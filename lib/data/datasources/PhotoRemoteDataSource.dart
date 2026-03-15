@@ -1,9 +1,12 @@
 import 'package:architecture_sample/core/network/dio_client.dart';
 import 'package:architecture_sample/data/models/photo_model.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final photoRemoteDataSourceProvider =
-    Provider((ref) => PhotoRemoteDataSource(ref.watch(dioClientProvider)));
+part 'PhotoRemoteDataSource.g.dart';
+
+@riverpod
+PhotoRemoteDataSource photoRemoteDataSource(Ref ref) =>
+    PhotoRemoteDataSource(ref.watch(dioClientProvider));
 
 class PhotoRemoteDataSource {
   final DioClient _dioClient;

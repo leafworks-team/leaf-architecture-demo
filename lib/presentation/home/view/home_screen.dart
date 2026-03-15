@@ -1,11 +1,9 @@
 import 'package:architecture_sample/core/router/app_router.gr.dart';
 import 'package:architecture_sample/presentation/home/viewmodels/home_viewmodel.dart';
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:architecture_sample/l10n/app_localizations.dart';
 
 @RoutePage()
 class HomeScreen extends ConsumerStatefulWidget {
