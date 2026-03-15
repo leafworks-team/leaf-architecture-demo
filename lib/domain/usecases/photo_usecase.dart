@@ -1,4 +1,5 @@
 import 'package:architecture_sample/domain/entities/photo_entity.dart';
+import 'package:architecture_sample/data/repositories/photo_repository_impl.dart';
 import 'package:architecture_sample/domain/repositories/photo_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
