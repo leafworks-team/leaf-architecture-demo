@@ -62,11 +62,31 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 - `ConsumerWidget` 또는 `ConsumerStatefulWidget`
 - `static const String routeName` 정의
 
-### 4. 라우팅
+### 4. 다국어 처리
+
+ARB 파일 3개에 새 기능의 문자열을 추가한다.
+
+- `lib/l10n/app_ko.arb` (한국어)
+- `lib/l10n/app_en.arb` (영어)
+- `lib/l10n/app_ja.arb` (일본어)
+
+**키 네이밍 규칙**: `{screen명}_{위치}_{설명}` (snake_case)
+- 예: `home_screen_tab_photo`, `photo_screen_title`
+
+**사용법**: Screen에서 `AppLocalizations.of(context)!.키이름`으로 사용
+```dart
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+AppLocalizations.of(context)!.photo_screen_title
+```
+
+- 하드코딩된 문자열 사용 금지, 반드시 ARB를 통해 다국어 처리
+
+### 5. 라우팅
 
 - `lib/core/router/app_router.dart`에 라우트 추가
 
-### 5. 코드 생성
+### 6. 코드 생성
 
 ```bash
 dart run build_runner build --delete-conflicting-outputs
