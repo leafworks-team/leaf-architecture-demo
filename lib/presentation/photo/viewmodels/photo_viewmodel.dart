@@ -1,3 +1,4 @@
+import 'package:architecture_sample/di/usecase_providers.dart';
 import 'package:architecture_sample/domain/usecases/photo_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
