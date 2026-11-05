@@ -20,6 +20,9 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 - 요청/응답에 필요한 Model이 없으면 먼저 생성한다.
 - Model은 `@freezed` sealed class + `fromJson` + `toEntity()` 패턴을 따른다.
 
+DataSource 파일은 `package:leaf_architecture/network.dart` 하나만 import 한다(retrofit · dio · DioClient · Failure 포함).
+응답을 Map 그대로 받아야 하면 `Map<String, Object?>`로 쓴다(`Map<String, dynamic>`은 retrofit_generator 10.3.3 이 컴파일 안 되는 코드를 만든다).
+
 ### 3. 엔드포인트 추가
 
 Retrofit 어노테이션으로 추상 메서드를 추가한다.
@@ -63,5 +66,5 @@ Future<void> deleteItem(@Path('id') String id);
 ### 7. 코드 생성
 
 ```bash
-dart run build_runner build --delete-conflicting-outputs
+dart run build_runner build
 ```

@@ -62,4 +62,4 @@ extension {Name}Extension on {Name}Model {
 - 파일명: `snake_case.dart`
 - API 응답 필드명과 Dart 필드명이 다르면 `@JsonKey(name: 'api_field')` 사용
 - 중첩 JSON 매핑이 필요하면 커스텀 `fromJson`에서 처리
-- 생성 후 `dart run build_runner build --delete-conflicting-outputs` 실행
+- 생성 후 `dart run build_runner build` 실행

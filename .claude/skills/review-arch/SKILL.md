@@ -14,11 +14,10 @@ allowed-tools: Read, Glob, Grep
 
 Domain 레이어(`lib/domain/`)가 Data 레이어(`lib/data/`)를 import하는지 검사한다.
 
-- `lib/domain/entities/` → 외부 패키지 import 금지
-- `lib/domain/repositories/` → Data 레이어 import 금지, 추상 클래스만 존재해야 함
-- `lib/domain/usecases/` → Data 레이어의 Repository Provider import는 허용 (DI 연결)
-
-**예외**: UseCase의 `@riverpod` Provider가 Repository Provider를 참조하는 것은 허용.
+- `lib/domain/` 전체 → Flutter · Dio · 저장소 · data · presentation import 금지 (예외: 순수 Dart인 `lib/core/utils/`)
+- `lib/domain/repositories/` → 추상 클래스만 존재해야 함
+- `lib/domain/usecases/` → Provider를 두지 않는다. UseCase Provider는 `lib/di/usecase_providers.dart`에
+- `lib/core/` → domain · data · presentation · di import 금지. domain 타입이 필요한 위젯은 `lib/presentation/common/`에
 
 ### 2. Provider 위치
 
@@ -39,12 +38,14 @@ Domain 레이어(`lib/domain/`)가 Data 레이어(`lib/data/`)를 import하는�
 
 ### 5. DataSource 규칙
 
-- `lib/data/datasources/`의 DataSource는 `@RestApi()` Retrofit 인터페이스여야 함
+- `lib/data/datasources/`의 원격 DataSource는 `@RestApi()` Retrofit 인터페이스여야 함 (파일 · 저장소를 다루는 로컬 DataSource는 일반 클래스 가능)
 - Dio를 직접 호출하면 위반
+- Retrofit은 `package:leaf_architecture/network.dart`로만 import (UI 파일에서 import하면 위반)
 
 ### 6. DI 컨벤션
 
 - StorageService 등 인프라 레벨 → GetIt/Injectable 사용 확인
+- `lib/di/injection.dart`가 `ExternalModule(LeafArchitecturePackageModule)`로 leaf_architecture를 등록하는지 확인
 - ViewModel, UseCase, Repository 등 → Riverpod `@riverpod` 사용 확인
 - 두 DI가 혼용되면 위반 (역할별로 분리되어야 함)
 
