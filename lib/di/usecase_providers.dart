@@ -5,5 +5,4 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'usecase_providers.g.dart';
 
 @riverpod
-PhotoUseCase photoUseCase(Ref ref) =>
-    PhotoUseCase(ref.watch(photoRepositoryProvider));
+PhotoUseCase photoUseCase(Ref ref) => PhotoUseCase(ref.watch(photoRepositoryProvider));

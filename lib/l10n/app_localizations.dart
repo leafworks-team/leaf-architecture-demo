@@ -63,8 +63,7 @@ import 'app_localizations_ko.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale)
-    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -72,8 +71,7 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -85,20 +83,15 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
-        delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('en'),
-    Locale('ja'),
-    Locale('ko'),
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('ja'), Locale('ko')];
 
   /// No description provided for @app_title.
   ///
@@ -117,10 +110,45 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'즐겨찾기'**
   String get home_screen_tab_favorite;
+
+  /// No description provided for @photo_screen_empty.
+  ///
+  /// In ko, this message translates to:
+  /// **'사진이 없어요'**
+  String get photo_screen_empty;
+
+  /// No description provided for @photo_screen_retry.
+  ///
+  /// In ko, this message translates to:
+  /// **'다시 시도'**
+  String get photo_screen_retry;
+
+  /// No description provided for @photo_screen_failure_network.
+  ///
+  /// In ko, this message translates to:
+  /// **'인터넷 연결을 확인해 주세요'**
+  String get photo_screen_failure_network;
+
+  /// No description provided for @photo_screen_failure_server.
+  ///
+  /// In ko, this message translates to:
+  /// **'서버에서 사진을 받지 못했어요'**
+  String get photo_screen_failure_server;
+
+  /// No description provided for @photo_screen_failure_unknown.
+  ///
+  /// In ko, this message translates to:
+  /// **'사진을 불러오지 못했어요'**
+  String get photo_screen_failure_unknown;
+
+  /// No description provided for @favorite_screen_empty.
+  ///
+  /// In ko, this message translates to:
+  /// **'즐겨찾기한 사진이 없어요'**
+  String get favorite_screen_empty;
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -129,8 +157,7 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en', 'ja', 'ko'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'ja', 'ko'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;

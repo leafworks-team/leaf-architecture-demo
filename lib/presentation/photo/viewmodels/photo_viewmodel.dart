@@ -1,54 +1,42 @@
-import 'package:architecture_sample/di/usecase_providers.dart';
-import 'package:architecture_sample/domain/usecases/photo_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../di/usecase_providers.dart';
+import '../../../domain/entities/photo_failure.dart';
 import '../state/photo_state.dart';
 
 part 'photo_viewmodel.g.dart';
 
 @riverpod
 class PhotoViewModel extends _$PhotoViewModel {
-  late final PhotoUseCase useCase;
+  static const perPage = 20;
 
   @override
-  PhotoState build() {
-    useCase = ref.watch(photoUseCaseProvider);
-    return PhotoState();
-  }
+  PhotoState build() => const PhotoState();
 
-  Future<void> fetchPhotos(int page, int perPage) async {
-    state = state.copyWith(status: PhotoStatus.loading);
-
+  /// Loads the first page, replacing what is shown.
+  Future<void> fetchPhotos() async {
+    state = state.copyWith(status: PhotoStatus.loading, failure: null);
     try {
-      final photos = await useCase.getPhotos(page, perPage);
-      state = state.copyWith(
-        status: PhotoStatus.loaded,
-        photos: photos,
-      );
-    } catch (e) {
-      state = state.copyWith(
-        status: PhotoStatus.failure,
-        errorMessage: e.toString(),
-      );
+      final photos = await ref.read(photoUseCaseProvider).getPhotos(1, perPage);
+      if (ref.mounted) state = state.copyWith(status: PhotoStatus.loaded, photos: photos, page: 1);
+    } on PhotoFailure catch (failure) {
+      if (ref.mounted) state = state.copyWith(status: PhotoStatus.failure, failure: failure.kind);
     }
   }
 
-  Future<void> fetchMorePhotos(int page, int perPage) async {
-    if (state.status == PhotoStatus.fetchingMore) return;
-
+  /// Appends the next page. Ignored while a page is already loading.
+  Future<void> fetchMorePhotos() async {
+    if (state.status == PhotoStatus.loading || state.status == PhotoStatus.fetchingMore) return;
     state = state.copyWith(status: PhotoStatus.fetchingMore);
-
     try {
-      final newPhotos = await useCase.getPhotos(page, perPage);
-      state = state.copyWith(
-        status: PhotoStatus.loaded,
-        photos: [...state.photos, ...newPhotos],
-      );
-    } catch (e) {
-      state = state.copyWith(
-        status: PhotoStatus.failure,
-        errorMessage: e.toString(),
-      );
+      final next = state.page + 1;
+      final photos = await ref.read(photoUseCaseProvider).getPhotos(next, perPage);
+      if (ref.mounted) {
+        state = state.copyWith(status: PhotoStatus.loaded, photos: [...state.photos, ...photos], page: next);
+      }
+    } on PhotoFailure catch (failure) {
+      // Keep the photos already shown; only the next page failed.
+      if (ref.mounted) state = state.copyWith(status: PhotoStatus.loaded, failure: failure.kind);
     }
   }
 }

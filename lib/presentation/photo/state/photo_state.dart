@@ -1,34 +1,19 @@
-import 'package:architecture_sample/domain/entities/photo_entity.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-enum PhotoStatus {
-  initial,
-  loading,
-  loaded,
-  failure,
-  fetchingMore,
-}
+import '../../../domain/entities/photo_entity.dart';
+import '../../../domain/entities/photo_failure.dart';
 
-class PhotoState {
-  final PhotoStatus status;
-  final List<PhotoEntity> photos;
-  final PhotoEntity? selectedPhoto;
+part 'photo_state.freezed.dart';
 
-  PhotoState({
-    this.status = PhotoStatus.initial,
-    this.photos = const [],
-    this.selectedPhoto,
-  });
+enum PhotoStatus { initial, loading, loaded, failure, fetchingMore }
 
-  PhotoState copyWith({
-    PhotoStatus? status,
-    List<PhotoEntity>? photos,
-    PhotoEntity? selectedPhoto,
-    String? errorMessage,
-  }) {
-    return PhotoState(
-      status: status ?? this.status,
-      photos: photos ?? this.photos,
-      selectedPhoto: selectedPhoto ?? this.selectedPhoto,
-    );
-  }
+/// Compared by identity (equal: false): the photo list grows with every page.
+@Freezed(equal: false)
+sealed class PhotoState with _$PhotoState {
+  const factory PhotoState({
+    @Default(PhotoStatus.initial) PhotoStatus status,
+    @Default(<PhotoEntity>[]) List<PhotoEntity> photos,
+    @Default(0) int page,
+    PhotoFailureKind? failure,
+  }) = _PhotoState;
 }

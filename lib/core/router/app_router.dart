@@ -14,22 +14,16 @@ AppRouter appRouter(Ref ref) => AppRouter();
 class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(
-          page: HomeRoute.page,
-          path: HomeScreen.routeName,
-          initial: true,
-          children: [
-            AutoRoute(
-              page: PhotoRoute.page,
-              path: PhotoScreen.routeName,
-            ),
-            AutoRoute(
-              page: FavoriteRoute.page,
-              path: FavoriteScreen.routeName,
-            ),
-          ],
-        ),
-      ];
+    AutoRoute(
+      page: HomeRoute.page,
+      path: HomeScreen.routeName,
+      initial: true,
+      children: [
+        AutoRoute(page: PhotoRoute.page, path: PhotoScreen.routeName),
+        AutoRoute(page: FavoriteRoute.page, path: FavoriteScreen.routeName),
+      ],
+    ),
+  ];
 
   @override
   List<AutoRouteGuard> get guards => [];

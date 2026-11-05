@@ -1,22 +1,18 @@
-import 'package:architecture_sample/core/network/dio_client.dart';
-import 'package:architecture_sample/data/models/photo_model.dart';
-import 'package:dio/dio.dart';
-import 'package:retrofit/retrofit.dart';
+import 'package:leaf_architecture/network.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../core/network/dio_client.dart';
+import '../models/photo_model.dart';
 
 part 'photo_remote_data_source.g.dart';
 
-@riverpod
-PhotoRemoteDataSource photoRemoteDataSource(Ref ref) =>
-    PhotoRemoteDataSource(ref.watch(dioClientProvider).dio);
+@Riverpod(keepAlive: true)
+PhotoRemoteDataSource photoRemoteDataSource(Ref ref) => PhotoRemoteDataSource(ref.watch(unsplashDioClientProvider).dio);
 
 @RestApi()
 abstract class PhotoRemoteDataSource {
   factory PhotoRemoteDataSource(Dio dio) = _PhotoRemoteDataSource;
 
   @GET('/photos')
-  Future<List<PhotoModel>> getPhotos(
-    @Query('page') int page,
-    @Query('per_page') int perPage,
-  );
+  Future<List<PhotoModel>> getPhotos(@Query('page') int page, @Query('per_page') int perPage);
 }

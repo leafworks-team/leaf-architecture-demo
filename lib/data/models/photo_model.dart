@@ -7,26 +7,13 @@ part 'photo_model.g.dart';
 
 @freezed
 sealed class PhotoModel with _$PhotoModel {
-  const factory PhotoModel({
-    required String id,
-    required String url,
-    required String thumbUrl,
-    String? description,
-  }) = _PhotoModel;
+  const factory PhotoModel({required String id, required String url, required String thumbUrl, String? description}) =
+      _PhotoModel;
 
   factory PhotoModel.fromJson(Map<String, dynamic> json) =>
-      _$PhotoModelFromJson({
-        ...json,
-        'url': json['urls']['regular'],
-        'thumbUrl': json['urls']['thumb'],
-      });
+      _$PhotoModelFromJson({...json, 'url': json['urls']['regular'], 'thumbUrl': json['urls']['thumb']});
 }
 
 extension PhotoExtension on PhotoModel {
-  PhotoEntity toEntity() => PhotoEntity(
-    id: id,
-    url: url,
-    thumbUrl: thumbUrl,
-    description: description,
-  );
+  PhotoEntity toEntity() => PhotoEntity(id: id, url: url, thumbUrl: thumbUrl, description: description);
 }

@@ -1,7 +1,12 @@
 {
   "@@locale": "ja",
-
   "app_title": "アーキテクチャ サンプル アプリ",
   "home_screen_tab_photo": "フォト",
-  "home_screen_tab_favorite": "お気に入り"
+  "home_screen_tab_favorite": "お気に入り",
+  "photo_screen_empty": "写真がありません",
+  "photo_screen_retry": "再試行",
+  "photo_screen_failure_network": "インターネット接続を確認してください",
+  "photo_screen_failure_server": "サーバーから写真を取得できませんでした",
+  "photo_screen_failure_unknown": "写真を読み込めませんでした",
+  "favorite_screen_empty": "お気に入りの写真はまだありません"
 }
