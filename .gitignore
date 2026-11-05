@@ -32,6 +32,8 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+/coverage/
+.widget_preview/
 *.g.dart
 *.gr.dart
 *.freezed.dart
@@ -48,8 +50,8 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# ignore key
-constants.dart
+# Keys passed with --dart-define-from-file (see config/secrets.example.json)
+config/secrets.json
 
 # Generated localization files
 lib/l10n/app_localizations*.dart
