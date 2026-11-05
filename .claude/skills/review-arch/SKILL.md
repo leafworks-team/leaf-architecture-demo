@@ -44,10 +44,9 @@ Domain 레이어(`lib/domain/`)가 Data 레이어(`lib/data/`)를 import하는�
 
 ### 6. DI 컨벤션
 
-- StorageService 등 인프라 레벨 → GetIt/Injectable 사용 확인
-- `lib/di/injection.dart`가 `ExternalModule(LeafArchitecturePackageModule)`로 leaf_architecture를 등록하는지 확인
-- ViewModel, UseCase, Repository 등 → Riverpod `@riverpod` 사용 확인
-- 두 DI가 혼용되면 위반 (역할별로 분리되어야 함)
+- ViewModel, UseCase, Repository, StorageService 같은 인프라까지 모두 Riverpod `@riverpod`으로 주입하는지 확인
+- GetIt 같은 서비스 로케이터(`getIt<T>()`)를 쓰면 위반
+- 비동기로 여는 인프라(StorageService 등)는 `main`에서 열어 `ProviderScope(overrides: ...)`로 넣는지 확인
 
 ### 7. 미사용 import / 변수
 

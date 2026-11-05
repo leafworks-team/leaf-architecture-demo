@@ -1,6 +1,6 @@
 # Leaf Architecture Demo
 
-A small photo app that shows how to build on [leaf-architecture](https://github.com/leafworks-team/leaf-architecture): Clean Architecture layers, MVVM screens with Riverpod, Retrofit for the network and Injectable for infrastructure. It lists photos from the [Unsplash API](https://unsplash.com/developers).
+A small photo app that shows how to build on [leaf-architecture](https://github.com/leafworks-team/leaf-architecture): Clean Architecture layers, MVVM screens with Riverpod, Riverpod alone for dependency injection and Retrofit for the network. It lists photos from the [Unsplash API](https://unsplash.com/developers).
 
 **English** · [한국어](README.ko.md)
 
@@ -29,14 +29,13 @@ flutter run --dart-define-from-file=config/app.env --dart-define-from-file=confi
 
 ```
 lib/
-├── main.dart                         Sets up DI, then runs the app inside a ProviderScope
+├── main.dart                         Opens storage, then runs the app inside a ProviderScope
 ├── core/
 │   ├── config/app_config.dart        Build-time settings and their provider
 │   ├── network/dio_client.dart       One DioClient provider per server (here: Unsplash)
 │   ├── router/app_router.dart        auto_route configuration
 │   └── themes/themes.dart            Light and dark themes
 ├── di/
-│   ├── injection.dart                GetIt setup; registers leaf_architecture as a micro package
 │   └── usecase_providers.dart        Use case providers
 ├── domain/
 │   ├── entities/                     PhotoEntity, PhotoFailure
@@ -65,14 +64,16 @@ Dependencies point inward: `presentation → domain ← data`, and `core` import
 
 ## Dependency injection
 
-| DI | Used for |
-|---|---|
-| Riverpod (`@riverpod`) | Config, DioClient, data sources, repositories, use cases, view models |
-| GetIt (Injectable) | Infrastructure from leaf_architecture (`StorageService`) |
+Everything goes through Riverpod (`@riverpod`): config, DioClient, data sources, repositories, use cases, view models and leaf_architecture's `StorageService`. There is no service locator such as GetIt, as the [Flutter architecture guide](https://docs.flutter.dev/app-architecture/recommendations) advises against globally accessible objects.
+
+Storage opens asynchronously, so `main` opens it before `runApp` and overrides the provider:
 
 ```dart
-@InjectableInit(externalPackageModulesBefore: [ExternalModule(LeafArchitecturePackageModule)])
-Future<void> configureDependencies() async => getIt.init();
+final storage = await StorageService.open();
+runApp(ProviderScope(
+  overrides: [storageServiceProvider.overrideWithValue(storage)],
+  child: const ArchitectureSampleApp(),
+));
 ```
 
 ## Tests

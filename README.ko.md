@@ -1,6 +1,6 @@
 # Leaf Architecture Demo
 
-[leaf-architecture](https://github.com/leafworks-team/leaf-architecture) 위에 앱을 어떻게 짜는지 보여 주는 작은 사진 앱입니다. Clean Architecture 레이어, Riverpod 기반 MVVM 화면, 네트워크는 Retrofit, 인프라는 Injectable 을 씁니다. [Unsplash API](https://unsplash.com/developers) 에서 사진 목록을 받아 보여 줍니다.
+[leaf-architecture](https://github.com/leafworks-team/leaf-architecture) 위에 앱을 어떻게 짜는지 보여 주는 작은 사진 앱입니다. Clean Architecture 레이어, Riverpod 기반 MVVM 화면, Riverpod 하나로 하는 의존성 주입, 네트워크는 Retrofit 을 씁니다. [Unsplash API](https://unsplash.com/developers) 에서 사진 목록을 받아 보여 줍니다.
 
 [English](README.md) · **한국어**
 
@@ -29,14 +29,13 @@ flutter run --dart-define-from-file=config/app.env --dart-define-from-file=confi
 
 ```
 lib/
-├── main.dart                         DI 를 설정하고 ProviderScope 안에서 앱을 실행
+├── main.dart                         저장소를 열고 ProviderScope 안에서 앱을 실행
 ├── core/
 │   ├── config/app_config.dart        빌드할 때 넣는 설정과 그 provider
 │   ├── network/dio_client.dart       서버마다 DioClient provider 하나 (여기서는 Unsplash)
 │   ├── router/app_router.dart        auto_route 설정
 │   └── themes/themes.dart            라이트 · 다크 테마
 ├── di/
-│   ├── injection.dart                GetIt 설정. leaf_architecture 를 micro package 로 등록
 │   └── usecase_providers.dart        유스케이스 provider
 ├── domain/
 │   ├── entities/                     PhotoEntity, PhotoFailure
@@ -65,14 +64,16 @@ lib/
 
 ## 의존성 주입
 
-| DI | 쓰는 곳 |
-|---|---|
-| Riverpod (`@riverpod`) | 설정, DioClient, 데이터 소스, Repository, 유스케이스, ViewModel |
-| GetIt (Injectable) | leaf_architecture 의 인프라 (`StorageService`) |
+설정, DioClient, 데이터 소스, Repository, 유스케이스, ViewModel, 그리고 leaf_architecture 의 `StorageService`까지 모두 Riverpod(`@riverpod`)으로 주입합니다. [Flutter 아키텍처 가이드](https://docs.flutter.dev/app-architecture/recommendations)가 전역으로 꺼내 쓰는 객체를 피하라고 하므로 GetIt 같은 서비스 로케이터는 쓰지 않습니다.
+
+저장소는 비동기로 열리므로 `main`이 `runApp` 전에 열어서 provider 를 덮어씁니다.
 
 ```dart
-@InjectableInit(externalPackageModulesBefore: [ExternalModule(LeafArchitecturePackageModule)])
-Future<void> configureDependencies() async => getIt.init();
+final storage = await StorageService.open();
+runApp(ProviderScope(
+  overrides: [storageServiceProvider.overrideWithValue(storage)],
+  child: const ArchitectureSampleApp(),
+));
 ```
 
 ## 테스트

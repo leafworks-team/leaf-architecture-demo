@@ -19,13 +19,12 @@ dependencies:
   leaf_architecture:
     git:
       url: https://github.com/leafworks-team/leaf-architecture.git
-      ref: v2.1.0
+      ref: v3.0.0
 
   flutter_riverpod: ^3.4.3
   riverpod_annotation: ^4.0.7
   freezed_annotation: ^3.1.0
   json_annotation: ^4.12.0
-  injectable: ^3.0.0
   auto_route: ^11.2.0
 
 dev_dependencies:
@@ -33,14 +32,13 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^6.0.0
 
-  # 2.17 moves to build 5, which riverpod_generator and injectable_generator do not support yet.
+  # 2.17 moves to build 5, which riverpod_generator does not support yet.
   build_runner: ">=2.16.1 <2.17.0"
   # 4.0.2+ needs analyzer 14; auto_route_generator stops at analyzer 13.
   freezed: ">=4.0.1 <4.0.2"
   json_serializable: ^6.15.2
   retrofit_generator: ^10.3.3
   riverpod_generator: ^4.0.9
-  injectable_generator: ^3.1.3
   auto_route_generator: ^10.6.0
 
 flutter:
