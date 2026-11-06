@@ -1,12 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../../../l10n/app_localizations.dart';
 
-@RoutePage()
 class FavoriteScreen extends StatelessWidget {
-  static const String routeName = 'favorite';
-
   const FavoriteScreen({super.key});
 
   @override

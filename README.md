@@ -1,6 +1,6 @@
 # Leaf Architecture Demo
 
-A small photo app that shows how to build on [leaf-architecture](https://github.com/leafworks-team/leaf-architecture): Clean Architecture layers, MVVM screens with Riverpod, Riverpod alone for dependency injection and Retrofit for the network. It lists photos from the [Unsplash API](https://unsplash.com/developers).
+A small photo app that shows how to build on [leaf-architecture](https://github.com/leafworks-team/leaf-architecture): Clean Architecture layers, MVVM screens with Riverpod, Riverpod alone for dependency injection, Retrofit for the network and go_router for navigation. It lists photos from the [Unsplash API](https://unsplash.com/developers).
 
 **English** · [한국어](README.ko.md)
 
@@ -33,7 +33,6 @@ lib/
 ├── core/
 │   ├── config/app_config.dart        Build-time settings and their provider
 │   ├── network/dio_client.dart       One DioClient provider per server (here: Unsplash)
-│   ├── router/app_router.dart        auto_route configuration
 │   └── themes/themes.dart            Light and dark themes
 ├── di/
 │   └── usecase_providers.dart        Use case providers
@@ -48,7 +47,8 @@ lib/
 ├── presentation/
 │   ├── home/view/                    Tab container
 │   ├── photo/                        view · viewmodels · state
-│   └── favorite/view/                Placeholder tab
+│   ├── favorite/view/                Placeholder tab
+│   └── router/app_router.dart        go_router configuration and route paths
 └── l10n/                             ARB files (en, ja, ko); Korean is the template
 ```
 
@@ -76,13 +76,22 @@ runApp(ProviderScope(
 ));
 ```
 
+## Navigation
+
+`presentation/router/app_router.dart` holds the whole go_router setup. It lives in presentation rather than core because it imports the screens.
+
+- Rebuilding the router would reset the navigation stack, so `appRouterProvider` is a keepAlive provider that never watches another provider. A redirect that needs app state uses `ref.read`.
+- Paths are constants in `Routes`, so screens never spell out a path.
+- The tabs are a `StatefulShellRoute.indexedStack`, so each tab keeps its own stack. `HomeScreen` draws the bottom bar and switches tabs with `goBranch`.
+- Dialogs and bottom sheets are not routes. They open with `showDialog` and `showModalBottomSheet`.
+
 ## Tests
 
 ```bash
 flutter test
 ```
 
-`test/photo_test.dart` covers the repository (response mapping, access key header, failure mapping through a fake HTTP adapter), the view model (paging, failures) and the screen's retry flow. Tests replace providers instead of passing defines.
+`test/photo_test.dart` covers the repository (response mapping, access key header, failure mapping through a fake HTTP adapter), the view model (paging, failures) and the screen's retry flow. `test/home_test.dart` pumps the whole app and switches between the two tabs. Tests replace providers instead of passing defines.
 
 ## Code generation
 
@@ -90,8 +99,8 @@ flutter test
 dart run build_runner build    # or: dart run build_runner watch
 ```
 
-- Generated files (`*.g.dart`, `*.freezed.dart`, `*.gr.dart`, `*.config.dart`, `app_localizations*.dart`) are git-ignored, so run the generator after cloning.
-- build_runner stays below 2.17 and freezed at 4.0.1 until the generators catch up; `pubspec.yaml` notes why.
+- Generated files (`*.g.dart`, `*.freezed.dart`, `*.config.dart`, `app_localizations*.dart`) are git-ignored, so run the generator after cloning.
+- build_runner stays below 2.17 until riverpod_generator catches up; `pubspec.yaml` notes why.
 
 ## Claude Code skills
 

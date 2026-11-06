@@ -48,7 +48,16 @@ Domain 레이어(`lib/domain/`)가 Data 레이어(`lib/data/`)를 import하는�
 - GetIt 같은 서비스 로케이터(`getIt<T>()`)를 쓰면 위반
 - 비동기로 여는 인프라(StorageService 등)는 `main`에서 열어 `ProviderScope(overrides: ...)`로 넣는지 확인
 
-### 7. 미사용 import / 변수
+### 7. 라우팅
+
+- 라우터는 `lib/presentation/router/app_router.dart`에 있어야 함. 라우터는 화면을 import 하므로 `lib/core/`에 있으면 위반
+- `appRouter`는 `@Riverpod(keepAlive: true)` provider 하나이고 `ref.onDispose(router.dispose)`를 불러야 함
+- `appRouter` provider 안에서 `ref.watch`를 쓰면 위반 (라우터가 다시 만들어지면서 화면 스택이 사라진다). redirect 안에서는 `ref.read`
+- 경로는 `Routes` 상수로만 씀. `context.go('/photos')`처럼 화면에 경로 문자열을 쓰면 위반
+- 탭은 `StatefulShellRoute.indexedStack`으로 만들어 탭마다 스택을 유지해야 함
+- 다이얼로그 · 바텀 시트를 `GoRoute`로 만들면 위반 (`showDialog` · `showModalBottomSheet`로 띄운다)
+
+### 8. 미사용 import / 변수
 
 `flutter analyze` 결과에서 warning을 확인한다.
 

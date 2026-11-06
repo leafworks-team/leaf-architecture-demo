@@ -35,7 +35,6 @@ migrate_working_dir/
 /coverage/
 .widget_preview/
 *.g.dart
-*.gr.dart
 *.freezed.dart
 
 # Symbolication related

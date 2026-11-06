@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -7,10 +6,7 @@ import '../../../l10n/app_localizations.dart';
 import '../state/photo_state.dart';
 import '../viewmodels/photo_viewmodel.dart';
 
-@RoutePage()
 class PhotoScreen extends ConsumerStatefulWidget {
-  static const String routeName = 'photo';
-
   const PhotoScreen({super.key});
 
   @override

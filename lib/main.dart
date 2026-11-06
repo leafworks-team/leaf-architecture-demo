@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:leaf_architecture/leaf_architecture.dart';
 import 'package:architecture_sample/l10n/app_localizations.dart';
 
-import 'core/router/app_router.dart';
+import 'presentation/router/app_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +32,7 @@ class ArchitectureSampleApp extends ConsumerWidget {
       ],
       supportedLocales: [Locale('en'), Locale('ja'), Locale('ko')],
       darkTheme: AppTheme.darkTheme,
-      routerConfig: ref.read(appRouterProvider).config(),
+      routerConfig: ref.watch(appRouterProvider),
     );
   }
 }

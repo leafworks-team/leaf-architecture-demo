@@ -65,10 +65,10 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 - `await` 뒤에는 `if (ref.mounted)`를 확인하고 state를 바꾼다
 
 **Screen** (`lib/presentation/$ARGUMENTS/view/$ARGUMENTS_screen.dart`)
-- `@RoutePage()` 어노테이션
 - `ConsumerWidget` 또는 `ConsumerStatefulWidget`
-- `static const String routeName` 정의
+- 경로 문자열을 직접 쓰지 않는다. 이동은 `context.go(Routes.$ARGUMENTS)`처럼 `Routes` 상수로
 - 다이얼로그 · 스낵바 같은 일회성 동작은 `ref.listen`으로 (build 안에서 직접 띄우지 않는다)
+- 다이얼로그 · 바텀 시트는 라우트로 만들지 않고 `showDialog` · `showModalBottomSheet`로 띄운다
 
 ### 4. 다국어 처리
 
@@ -92,7 +92,12 @@ AppLocalizations.of(context)!.photo_screen_title
 
 ### 5. 라우팅
 
-- `lib/core/router/app_router.dart`에 라우트 추가
+라우터는 `lib/presentation/router/app_router.dart` 하나에 있다 (go_router). 라우트는 코드 생성을 거치지 않으므로 화면에 붙이는 어노테이션도 없다.
+
+- `Routes`에 경로 상수를 추가한다 (예: `static const settings = '/settings';`)
+- 같은 파일에 `GoRoute(path: Routes.settings, builder: ...)`를 추가한다
+- 새 탭이면 `StatefulShellRoute.indexedStack`의 `branches`에 `StatefulShellBranch`를 추가하고, `HomeScreen`의 `destinations`도 같은 순서로 늘린다
+- `appRouter` provider 안에서 `ref.watch`를 쓰지 않는다. 라우터가 다시 만들어지면 화면 스택이 사라지므로, redirect에 상태가 필요하면 `ref.read`로 읽는다
 
 ### 6. 코드 생성
 
